@@ -33,8 +33,7 @@
 
           <!-- Tombol -->
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn me-2" style="background-color: #729043; color: white">Kembali</button>
-            <button type="button" class="btn" style="background-color: #af4a4a; color: white" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
+            <a href="{{ route('petani.dashboard') }}" class="btn me-2" style="background-color: #729043; color: white">Kembali</a>
           </div>
           <!-- Tombol end -->
         </div>

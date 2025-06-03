@@ -2,69 +2,12 @@
 @section('title', 'Update Petani')
 
 @section('content')
-  <style>
-    .form-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #f5f9ef;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .form-title {
-      margin-bottom: 20px;
-      color: #789448;
-      text-align: center;
-      font-weight: bold;
-    }
-    .btn-save, .btn-back {
-      width: 48%;
-    }
-    .btn-save {
-      background-color: #789448;
-      color: white;
-      border: none;
-    }
-    .btn-save:hover {
-      background-color: #5e7d36;
-    }
-    .btn-back {
-      background-color: #789448; /* UBAH ke hijau */
-      color: white;
-      border: none;
-    }
-    .btn-back:hover {
-      background-color: #5e7d36; /* Hover juga hijau tua */
-    }
-    /* Modal Custom */
-    .modal-header {
-      background-color: #789448;
-      color: white;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-    }
-    .modal-content {
-      border-radius: 10px;
-    }
-    .btn-ya {
-      background-color: #789448;
-      color: white;
-    }
-    .btn-ya:hover {
-      background-color: #5e7d36;
-      color: white;
-    }
-    .btn-tidak {
-      background-color: #dc3545;
-      color: white;
-    }
-    .btn-tidak:hover {
-      background-color: #bb2d3b;
-      color: white;
-    }
-  </style>
-  <div class="form-container my-4 mx-auto">
-    <h2 class="form-title">Kelola Akun Petani</h2>
+  <div class="form-container my-4 mx-auto"
+    style="max-width:600px;margin:0 auto;background:#f5f9ef;padding:30px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h2 class="form-title"
+      style="margin-bottom:20px;color:#789448;text-align:center;font-weight:bold;">
+      Kelola Akun Petani
+    </h2>
     <form id="form-update">
       <div class="mb-3">
         <label for="nama" class="form-label">Nama</label>
@@ -82,10 +25,19 @@
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email" required>
       </div>
-
       <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-save">Simpan</button>
-        <button type="button" class="btn btn-back" id="btn-kembali">Kembali</button>
+        <button type="submit" class="btn btn-save"
+          style="width:48%;background-color:#789448;color:white;border:none;"
+          onmouseover="this.style.backgroundColor='#5e7d36'"
+          onmouseout="this.style.backgroundColor='#789448'">
+          Simpan
+        </button>
+        <button type="button" class="btn btn-back" id="btn-kembali"
+          style="width:48%;background-color:#789448;color:white;border:none;"
+          onmouseover="this.style.backgroundColor='#5e7d36'"
+          onmouseout="this.style.backgroundColor='#789448'">
+          Kembali
+        </button>
       </div>
     </form>
   </div>
@@ -93,13 +45,24 @@
   <!-- Modal Konfirmasi Update -->
   <div class="modal fade" id="konfirmasiUpdateModal" tabindex="-1" aria-labelledby="konfirmasiUpdateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header text-center">
+      <div class="modal-content" style="border-radius:10px;">
+        <div class="modal-header text-center"
+          style="background-color:#789448;color:white;border-top-left-radius:10px;border-top-right-radius:10px;">
           <h5 class="modal-title w-100" id="konfirmasiUpdateModalLabel">Apakah anda yakin melakukan perubahan ini?</h5>
         </div>
         <div class="modal-body text-center">
-          <button type="button" class="btn btn-ya me-3" id="btnKonfirmasiUpdate">Ya</button>
-          <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
+          <button type="button" class="btn btn-ya me-3" id="btnKonfirmasiUpdate"
+            style="background-color:#789448;color:white;"
+            onmouseover="this.style.backgroundColor='#5e7d36'"
+            onmouseout="this.style.backgroundColor='#789448'">
+            Ya
+          </button>
+          <button type="button" class="btn btn-tidak" data-bs-dismiss="modal"
+            style="background-color:#dc3545;color:white;"
+            onmouseover="this.style.backgroundColor='#bb2d3b'"
+            onmouseout="this.style.backgroundColor='#dc3545'">
+            Tidak
+          </button>
         </div>
       </div>
     </div>
@@ -121,11 +84,11 @@
     });
 
     btnKonfirmasiUpdate.addEventListener('click', function() {
-      window.location.href = 'Dashboard Admin.html'; // Redirect setelah klik "YA"
+      window.location.href = "{{ route('admin.dashboard') }}";
     });
 
     btnKembali.addEventListener('click', function() {
-      window.location.href = 'Dashboard Admin.html'; // Tombol Kembali juga redirect
+      window.location.href = "{{ route('admin.dashboard') }}";
     });
   </script>
 @endsection

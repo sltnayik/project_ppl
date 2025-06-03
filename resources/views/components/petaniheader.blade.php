@@ -16,18 +16,25 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center px-4 py-2" style="background-color: #729043; animation: slideInLeft 1s ease-in-out">
       <div class="d-flex align-items-center">
-        <button class="btn me-3" style="border-radius: 50%; width: 40px; height: 40px; border: 2px solid white">
-          <i class="bi bi-arrow-left" style="color: white"></i>
-        </button>
+        <button class="btn me-3" style="border-radius: 50%; width: 40px; height: 40px; border: 2px solid white"
+  onclick="window.history.back()">
+  <i class="bi bi-arrow-left" style="color: white"></i>
+</button>
         <div>
           <img src="{{ asset('assets/Logo.png') }}" alt="Logo" style="height: 50px; width: 150px" />
         </div>
       </div>
-      <div class="d-flex align-items-center" style="gap: 15px">
-        <span style="color: white; margin-right: 10px">Admin</span>
-        <div class="rounded-circle pb-1" style="background-color: rgb(207, 205, 205); width: 35px; height: 35px; display: flex; align-items: center; justify-content: center">
-          <i class="bi bi-person-circle" style="color: white; font-size: 35px"></i>
-        </div>
+      <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i> Profil</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="{{ route('petani.profil') }}"><i class="bi bi-person-lines-fill me-2"></i> Lihat Profil</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item text-danger"href="{{ route('dashboard') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+          </li>
+        </ul>
       </div>
     </div>
 
