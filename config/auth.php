@@ -43,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'petanis',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+],
     ],
 
     /*
@@ -71,10 +75,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Petani::class,
         ],
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*

@@ -1,30 +1,34 @@
+{{-- filepath: resources/views/admin/tambah petani.blade.php --}}
 @extends('admin.layouts.app')
 @section('title', 'Tambah Petani')
 
 @section('content')
-  <!-- Content -->
   <div class="content" style="margin-left:250px; padding:20px;">
     <h4 class="mb-4">Tambah Data Petani</h4>
-    <form id="tambahPetaniForm">
+    <form id="tambahPetaniForm" autocomplete="off">
       <div class="mb-3">
         <label for="namaPetani" class="form-label">Nama</label>
-        <input type="text" class="form-control" id="namaPetani" placeholder="Masukkan nama petani" required
+        <input type="text" class="form-control" id="nama_petani" placeholder="Masukkan nama petani" required
           style="background-color:#c0ce9b; border:none; color:#000;">
       </div>
       <div class="mb-3">
-        <label for="username" class="form-label">Nama Pengguna</label>
-        <input type="text" class="form-control" id="username" placeholder="Masukkan nama pengguna" required
+        <label for="nama_pengguna_petani" class="form-label">Nama Pengguna</label>
+        <input type="text" class="form-control" id="nama_pengguna_petani" placeholder="Masukkan nama pengguna" required
           style="background-color:#c0ce9b; border:none; color:#000;">
       </div>
       <div class="mb-3">
-        <label for="noHp" class="form-label">No Hp</label>
-        <input type="text" class="form-control" id="noHp" placeholder="Masukkan nomor HP" required
+        <label for="no_hp" class="form-label">No Hp</label>
+        <input type="text" class="form-control" id="no_hp" placeholder="Masukkan nomor HP" required
           style="background-color:#c0ce9b; border:none; color:#000;">
       </div>
-      <div class="mb-3">
+      <div class="mb-3 position-relative">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Masukkan password" required
           style="background-color:#c0ce9b; border:none; color:#000;">
+        <button type="button" id="togglePassword"
+          style="position:absolute; top:70%; right:10px; transform:translateY(-50%); background:none; border:none; cursor:pointer;">
+          👁
+        </button>
       </div>
       <button type="submit" class="btn btn-tambah"
         style="background-color:#789448; color:white; border-radius:20px; width:150px; margin:auto; display:block;"
@@ -53,15 +57,52 @@
     </div>
   </div>
 
-  <!-- Script untuk Menangani Formulir dan Modal -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Event listener untuk menangani pengisian formulir
+    // Toggle show/hide password
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.textContent = type === 'password' ? '👁' : '🙈';
+    });
+
+    // Handle form submit
     document.getElementById("tambahPetaniForm").addEventListener("submit", function(e) {
-      e.preventDefault(); // Mencegah halaman untuk reload
-      // Menampilkan modal konfirmasi
-      var modal = new bootstrap.Modal(document.getElementById('successModal'));
-      modal.show();
+      e.preventDefault();
+
+      const nama_petani = document.getElementById("nama_petani").value.trim();
+      const nama_pengguna_petani = document.getElementById("nama_pengguna_petani").value.trim();
+      const no_hp = document.getElementById("no_hp").value.trim();
+      const password = document.getElementById("password").value;
+
+      fetch("{{ route('admin.storepetani') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": "{{ csrf_token() }}",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          nama_petani: nama_petani,
+          nama_pengguna_petani: nama_pengguna_petani,
+          no_hp: no_hp,
+          password: password
+        })
+      })
+      .then(response => {
+        if (!response.ok) return response.json().then(err => Promise.reject(err));
+        return response.json();
+      })
+      .then(data => {
+        document.getElementById("tambahPetaniForm").reset();
+        let modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+      })
+      .catch(error => {
+        alert("Gagal tambah data: " + (error.message || JSON.stringify(error.errors)));
+      });
     });
   </script>
 @endsection

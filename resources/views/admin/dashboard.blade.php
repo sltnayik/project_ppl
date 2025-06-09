@@ -26,36 +26,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Anto</td>
-            <td>anto</td>
-            <td>093857204718</td>
-            <td>anto1234</td>
-            <td>
-              <a href="{{ route('admin.edit') }}" class="btn btn-primary btn-sm btn-action" style="margin-right:5px;">
-                <i class="bi bi-pencil-square"></i>
-              </a>
-              <button class="btn btn-danger btn-sm btn-hapus" data-id="1">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Beni</td>
-            <td>beni</td>
-            <td>037483927485</td>
-            <td>beni23</td>
-            <td>
-              <a href="{{ route('admin.edit') }}" class="btn btn-primary btn-sm btn-action" style="margin-right:5px;">
-                <i class="bi bi-pencil-square"></i>
-              </a>
-              <button class="btn btn-danger btn-sm btn-hapus" data-id="2">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
+            @foreach($petanis as $petani)
+                <tr>
+                    <td>{{ $petani->id_petani }}</td>
+                    <td>{{ $petani->nama_petani }}</td>
+                    <td>{{ $petani->nama_pengguna_petani }}</td>
+                    <td>{{ $petani->no_hp }}</td>
+                    <td>******</td>
+                    <td>
+                        <a href="{{ route('admin.edit', ['id' => $petani->id_petani]) }}" class="btn btn-primary btn-sm btn-action" style="margin-right:5px;">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <button class="btn btn-danger btn-sm btn-hapus" data-id="{{ $petani->id_petani }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
       </table>
 
@@ -87,33 +74,50 @@
       <!-- Script -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
       <script>
-        var hapusModal = new bootstrap.Modal(document.getElementById("hapusModal"));
-        var idYangMauDihapus = null;
-        var barisYangMauDihapus = null;
+var hapusModal = new bootstrap.Modal(document.getElementById("hapusModal"));
+var idYangMauDihapus = null;
+var barisYangMauDihapus = null;
 
-        document.querySelectorAll(".btn-hapus").forEach(function (button) {
-          button.addEventListener("click", function () {
-            idYangMauDihapus = this.getAttribute("data-id");
-            barisYangMauDihapus = this.closest("tr");
-            hapusModal.show();
-          });
-        });
+document.querySelectorAll(".btn-hapus").forEach(function (button) {
+  button.addEventListener("click", function () {
+    idYangMauDihapus = this.getAttribute("data-id");
+    barisYangMauDihapus = this.closest("tr");
+    hapusModal.show();
+  });
+});
 
-        document.getElementById("btn-ya").addEventListener("click", function () {
-          if (barisYangMauDihapus) {
-            barisYangMauDihapus.remove(); // Menghapus baris dari tabel
-          }
-          hapusModal.hide();
-          tampilkanToast(); // Tampilkan toast sukses
-        });
-
-        function tampilkanToast() {
-          var toast = document.getElementById("toast-sukses");
-          toast.style.display = "block";
-          setTimeout(function () {
-            toast.style.display = "none";
-          }, 3000); // 3 detik hilang otomatis
+document.getElementById("btn-ya").addEventListener("click", function () {
+  if (idYangMauDihapus) {
+    fetch(`/petani/${idYangMauDihapus}`, {
+      method: "DELETE",
+      headers: {
+        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+        "Accept": "application/json"
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        if (barisYangMauDihapus) {
+          barisYangMauDihapus.remove();
         }
-      </script>
+        hapusModal.hide();
+        tampilkanToast();
+      } else {
+        alert("Gagal menghapus data.");
+      }
+    })
+    .catch(() => alert("Gagal menghapus data."));
+  }
+});
+
+function tampilkanToast() {
+  var toast = document.getElementById("toast-sukses");
+  toast.style.display = "block";
+  setTimeout(function () {
+    toast.style.display = "none";
+  }, 3000);
+}
+</script>
     </div>
 @endsection

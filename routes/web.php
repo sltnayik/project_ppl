@@ -15,8 +15,11 @@ Route::get('/login', function () {
 Route::get('/dashboard admin', [adminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/profil admin', [adminController::class, 'profil'])->name('admin.profil');
 Route::get('/tambah petani', [adminController::class, 'tambah'])->name('admin.tambah');
-Route::get('/edit petani', [adminController::class, 'edit'])->name('admin.edit');
+Route::get('/edit petani/{id}', [adminController::class, 'edit'])->name('admin.edit');
+Route::put('/updatepetani/{id}', [adminController::class, 'update'])->name('admin.updatepetani');
 Route::get('/riwayat', [adminController::class, 'riwayat'])->name('admin.riwayat');
+Route::post('/storepetani', [adminController::class, 'storepetani'])->name('admin.storepetani');
+Route::delete('/petani/{id}', [adminController::class, 'destroy'])->name('admin.destroypetani');
 
 // petani
 Route::get('/dashboard petani', [petaniController::class, 'dashboard'])->name('petani.dashboard');

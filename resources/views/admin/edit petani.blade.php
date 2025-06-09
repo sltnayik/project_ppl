@@ -11,19 +11,19 @@
     <form id="form-update">
       <div class="mb-3">
         <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" id="nama" required>
+        <input type="text" class="form-control" id="nama" value="{{ $petani->nama_petani }}" required>
       </div>
       <div class="mb-3">
         <label for="username" class="form-label">Nama Pengguna</label>
-        <input type="text" class="form-control" id="username" required>
+        <input type="text" class="form-control" id="username" value="{{ $petani->nama_pengguna_petani }}" required>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Kata Sandi</label>
-        <input type="password" class="form-control" id="password" required>
+        <label for="no_hp" class="form-label">No HP</label>
+        <input type="text" class="form-control" id="no_hp" value="{{ $petani->no_hp }}" required>
       </div>
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" required>
+        <label for="password" class="form-label">Kata Sandi (isi jika ingin mengubah)</label>
+        <input type="password" class="form-control" id="password">
       </div>
       <div class="d-flex justify-content-between mt-4">
         <button type="submit" class="btn btn-save"
@@ -73,22 +73,47 @@
 
   <!-- Script Modal dan Navigasi -->
   <script>
-    const formUpdate = document.getElementById('form-update');
-    const btnKonfirmasiUpdate = document.getElementById('btnKonfirmasiUpdate');
-    const btnKembali = document.getElementById('btn-kembali');
-    const konfirmasiModal = new bootstrap.Modal(document.getElementById('konfirmasiUpdateModal'));
+const formUpdate = document.getElementById('form-update');
+const btnKonfirmasiUpdate = document.getElementById('btnKonfirmasiUpdate');
+const btnKembali = document.getElementById('btn-kembali');
+const konfirmasiModal = new bootstrap.Modal(document.getElementById('konfirmasiUpdateModal'));
 
-    formUpdate.addEventListener('submit', function(e) {
-      e.preventDefault();
-      konfirmasiModal.show();
-    });
+let updateData = {};
 
-    btnKonfirmasiUpdate.addEventListener('click', function() {
+formUpdate.addEventListener('submit', function(e) {
+  e.preventDefault();
+  updateData = {
+    nama_petani: document.getElementById('nama').value,
+    nama_pengguna_petani: document.getElementById('username').value,
+    no_hp: document.getElementById('no_hp').value,
+    password: document.getElementById('password').value
+  };
+  konfirmasiModal.show();
+});
+
+btnKonfirmasiUpdate.addEventListener('click', function() {
+  fetch("{{ route('admin.updatepetani', ['id' => $petani->id_petani]) }}", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": "{{ csrf_token() }}",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(updateData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
       window.location.href = "{{ route('admin.dashboard') }}";
-    });
+    } else {
+      alert("Gagal update data.");
+    }
+  })
+  .catch(() => alert("Gagal update data."));
+});
 
-    btnKembali.addEventListener('click', function() {
-      window.location.href = "{{ route('admin.dashboard') }}";
-    });
-  </script>
+btnKembali.addEventListener('click', function() {
+  window.location.href = "{{ route('admin.dashboard') }}";
+});
+</script>
 @endsection
