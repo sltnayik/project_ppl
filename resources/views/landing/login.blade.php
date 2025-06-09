@@ -129,27 +129,31 @@
         <!-- Form Section -->
         <div class="col-12 col-md-7 p-0 m-0 rounded-top rounded-start-5" style="background-color: #ffffff; animation: slideInRight 1s ease-in-out">
           <section class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh">
-            <form class="w-75" style="animation: fadeIn 1.5s ease-in-out; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 20px; padding: 20px">
+            <form class="w-75" method="POST" action="{{ route('login.petani') }}" style="animation: fadeIn 1.5s ease-in-out; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 20px; padding: 20px">
+              @csrf
               <h2 class="text-center" style="font-weight: bold; color: #729043; animation: fadeIn 2s ease-in-out">Masuk</h2>
               <div class="my-4">
-                <label for="exampleInputEmail1" class="form-label" style="color: #729043"> Email </label>
+                <label for="username" class="form-label" style="color: #729043">Nama Pengguna</label>
                 <input
-                  type="email"
+                  type="text"
                   class="form-control shadow-sm"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="Masukkan Email Pengguna"
+                  id="username"
+                  name="username"
+                  placeholder="Masukkan Nama Pengguna"
                   style="border-radius: 50px; background-color: #72724380; border: 1px solid white; color: rgb(255, 255, 255)"
+                  required
                 />
               </div>
               <div class="my-4">
-                <label for="exampleInputPassword1" class="form-label" style="color: #729043"> Kata Sandi </label>
+                <label for="password" class="form-label" style="color: #729043">Kata Sandi</label>
                 <input
                   type="password"
                   class="form-control shadow-sm"
-                  id="exampleInputPassword1"
+                  id="password"
+                  name="password"
                   placeholder="Masukkan Kata Sandi"
                   style="border-radius: 50px; background-color: rgba(114, 114, 67, 0.5); border: 1px solid white; color: rgb(255, 255, 255)"
+                  required
                 />
               </div>
               <div class="text-end">
@@ -158,9 +162,14 @@
                 </p>
               </div>
               <div class="m-4 text-center">
-                <button type="button" class="btn btn-secondary mt-4 shadow-sm btn-hover" style="background-color: #729043; width: 100px; border-radius: 50px; border: 1px solid white">Masuk</button>
+                <button type="submit" class="btn btn-secondary mt-4 shadow-sm btn-hover" style="background-color: #729043; width: 100px; border-radius: 50px; border: 1px solid white">Masuk</button>
               </div>
             </form>
+            @if($errors->has('login'))
+                <div class="alert alert-danger">
+                    {{ $errors->first('login') }}
+                </div>
+            @endif
           </section>
         </div>
 
@@ -181,7 +190,7 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-    <script>
+    {{-- <script>
       document.querySelector("button.btn").addEventListener("click", function () {
         const email = document.getElementById("exampleInputEmail1").value.trim();
         const password = document.getElementById("exampleInputPassword1").value.trim();
@@ -219,6 +228,6 @@
           modal.show();
         }
       });
-    </script>
+    </script> --}}
   </body>
 </html>

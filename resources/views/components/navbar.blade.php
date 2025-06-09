@@ -35,7 +35,7 @@
           </ul>
           <div>
             <button type="button" class="btn" style="background-color: #ffffff; color: #adc685; border: 1px solid #adc685">Daftar</button>
-            <button type="button" class="btn" style="background-color: #adc685; color: #ffffff" onclick="window.location.href='{{ route('login') }}'">Masuk</button>
+            <button type="button" class="btn" style="background-color: #adc685; color: #ffffff" onclick="window.location.href='{{ route('login.petani') }}'">Masuk</button>
           </div>
         </div>
       </div>

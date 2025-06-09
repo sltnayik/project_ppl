@@ -2,23 +2,33 @@
 @section('title', 'Riwayat')
 
 @section('content')
-    <!-- Konten List Analisis -->
-    <div class="text-center py-2 rounded"
-         style="background-color: #729043; color: white; margin: 20px 40px 0 280px; max-width: calc(100% - 290px);">
+<div class="container-fluid d-flex flex-column" style="min-height: 80vh;">
+    <!-- Judul selalu di atas -->
+    <div class="text-center py-2 rounded shadow-sm"
+         style="background-color: #729043; color: white; margin: 20px 40px 0 280px; max-width: calc(100% - 290px); position: sticky; top: 0; z-index: 2;">
       <h5 class="m-0">ANALISIS JAGUNG</h5>
     </div>
-    <div class="container my-4 scrollable-content"
-         style="margin: 20px 40px 20px 270px; flex-grow: 1; overflow-y: auto; max-width: calc(100% - 300px); max-height: 80vh;">
-      <!-- Kartu 1 -->
-      <div class="d-flex align-items-center justify-content-between bg-white shadow-sm rounded p-3 mb-3">
-        <div class="d-flex align-items-center">
-          <h5 class="me-3 mb-3">01</h5>
-          <img src="../assets/img/83_busuk-batang-pada-tanaman-jagung 3.png" alt="Busuk Batang" style="border-radius: 8px; width: 60px; height: 60px; object-fit: cover; margin-right: 15px" />
-          <div>
-            <strong>Jagung Blok A1<br />Busuk Batang</strong><br />
-            <small>pukul 09.15 Wib.<br />20, April 2025.</small>
-          </div>
+    <!-- Scrollable Riwayat -->
+    <div class="flex-grow-1" style="margin: 0 40px 20px 270px;">
+      <div class="scrollable-content" style="max-height: 60vh; overflow-y: auto; padding-top: 20px;">
+        @forelse($riwayat as $item)
+        <div class="d-flex align-items-center justify-content-between bg-white shadow-sm rounded p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar" style="border-radius: 8px; width: 60px; height: 60px; object-fit: cover; margin-right: 15px" />
+                <div>
+                    <strong>{{ $item->hasil_deteksi }}</strong><br />
+                    <small>{{ $item->tanggal_waktu_analisis }}</small><br />
+                    <small>Petani: {{ $item->petani->nama_petani ?? '-' }}</small><br />
+                    @if($item->keterangan)
+                        <small class="text-muted">Keterangan: {{ $item->keterangan }}</small>
+                    @endif
+                </div>
+            </div>
         </div>
+        @empty
+        <div class="text-center text-muted py-5">Belum ada riwayat analisis.</div>
+        @endforelse
       </div>
     </div>
+</div>
 @endsection

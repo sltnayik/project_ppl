@@ -1,35 +1,40 @@
 @extends('petani.layouts.app')
-@section('title', 'Solusi')
+@section('title', 'Solusi Penyakit')
 
 @section('content')
-    <!-- Main Content -->
-    <div class="container text-center" style="margin-top: 25px">
-      <!-- Upload Gambar -->
-      <div class="mx-auto mb-4" style="max-width: 400px; max-height: 200px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)">
-        <div class="p-2" style="background-color: #729043; color: white; font-weight: bold; border-top-left-radius: 10px; border-top-right-radius: 10px">Upload Gambar</div>
-        <div class="p-3 bg-light" style="height: 150px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px">
-          <img src="../assets/img/83_busuk-batang-pada-tanaman-jagung 3.png" alt="Jagung" class="img-fluid" />
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center" style="background-color:#729043; color:white; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+                    <h3 class="mb-0">
+                        <i class="bi bi-lightbulb-fill me-2"></i>
+                        Solusi Penyakit: <span style="color:#ffe066;">{{ $jenis_penyakit }}</span>
+                    </h3>
+                </div>
+                <div class="card-body p-4" style="background-color:#f8f9fa;">
+                    @if($solusi)
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-success"><i class="bi bi-exclamation-circle me-2"></i>Penyebab</h5>
+                            <div class="ps-3">{!! nl2br(e($solusi->penyebab)) !!}</div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-warning"><i class="bi bi-emoji-frown me-2"></i>Gejala</h5>
+                            <div class="ps-3">{!! nl2br(e($solusi->gejala)) !!}</div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-primary"><i class="bi bi-tools me-2"></i>Solusi</h5>
+                            <div class="ps-3">{!! nl2br(e($solusi->solusi)) !!}</div>
+                        </div>
+                    @else
+                        <div class="alert alert-warning text-center my-4">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Data solusi tidak ditemukan.
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <!-- Tingkat Kesehatan -->
-        <div class="col-md-4" style="max-width: 400px; height: 200px">
-          <div class="p-2" style="background-color: #729043; color: white; font-weight: bold; border-top-left-radius: 10px; border-top-right-radius: 10px">Tingkat Kesehatan</div>
-          <div class="p-3 text-start" style="border: 1px solid #ddd; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; background-color: white; height: 150px">
-            <p style="margin: 0; font-weight: bold">Tingkat Kesehatan Jagung di atas sebesar 65%.</p>
-          </div>
-        </div>
-
-        <!-- Jenis Penyakit -->
-        <div class="col-md-4" style="max-width: 400px; height: 200px">
-          <div class="p-2" style="background-color: #729043; color: white; font-weight: bold; border-top-left-radius: 10px; border-top-right-radius: 10px">Jenis Penyakit</div>
-          <div class="p-3 text-start" style="border: 1px solid #ddd; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; background-color: white; height: 150px">
-            <p style="margin: 0">
-              Jenis penyakit di atas mengarah kepada <strong><em>penyakit busuk batang.</em></strong>
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
-@endsection()
+</div>
+@endsection
