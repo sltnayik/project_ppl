@@ -21,3 +21,4 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+keras/model_pendeteksi_daun_jagung.keras
